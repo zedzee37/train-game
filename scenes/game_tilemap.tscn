@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bp535sak7qpkc"]
+
+[ext_resource type="Script" uid="uid://cs1ttr70egjeo" path="res://scripts/game_tilemap.gd" id="1_2sy46"]
+
+[sub_resource type="TileSet" id="TileSet_2sy46"]
+tile_size = Vector2i(64, 64)
+
+[node name="GameTilemap" type="TileMapLayer"]
+tile_set = SubResource("TileSet_2sy46")
+script = ExtResource("1_2sy46")
