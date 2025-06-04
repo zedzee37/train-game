@@ -42,13 +42,27 @@ func _process(_delta: float) -> void:
 	if _preview_time >= _preview_period:
 		_preview_time = 0
 	
-	var oscillation := (sin(_preview_time * _preview_frequency) + 1.0) / 2.0 * _preview_amplitude
-	preview_sprite.modulate.a = _preview_base_alpha + oscillation * (1.0 - _preview_base_alpha)
+	var oscillation := (sin(
+		_preview_time * _preview_frequency) + 1.0
+	) / 2.0 * _preview_amplitude
+
+	preview_sprite.modulate.a = (
+		_preview_base_alpha + oscillation * (1.0 - _preview_base_alpha)
+	)
 	
 func _create_temp_instance() -> void:
 	var selected_scene := placeables[_selected_placeable_idx]
 
 	_selected_placeable = selected_scene.instantiate()	
-	var sprite: Sprite2D = _selected_placeable.get_node("Sprite2D")
-	preview_sprite.texture = sprite.texture
+	
+	if _selected_placeable.has_node("Sprite2D"):
+		var sprite: Sprite2D = _selected_placeable.get_node("Sprite2D")
+		preview_sprite.texture = sprite.texture
+	else:
+		preview_sprite.texture = null
+		push_error(
+			"\"Sprite2D\" Node not found in target placeable, scene path: "
+			+ selected_scene.resource_path + "."
+		)
+
 

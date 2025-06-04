@@ -12,4 +12,4 @@ script = ExtResource("1_2sy46")
 placeables = Array[PackedScene]([ExtResource("2_xtk88")])
 
 [node name="PreviewSprite" type="Sprite2D" parent="."]
-modulate = Color(0.172549, 0.172549, 0.172549, 0.0431373)
+modulate = Color(1, 1, 1, 0.282353)
