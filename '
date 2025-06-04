@@ -9,19 +9,14 @@ signal placed(node: Node2D)
 
 
 @export var placeables: Array[PackedScene]
+@export var _preview_amplitude: float = 10.0
 @export var _preview_period: float = 1.0
-@export var _preview_base_alpha: float = 0.05
-@export var _preview_amplitude: float = 0.17
+@export var _preview_base_alpha: float = 80
 
 
 var _selected_placeable_idx: int = 0
 var _selected_placeable: Node2D
 var _preview_time: float = 0.0
-var _preview_frequency: float
-
-
-func _ready() -> void:
-	_preview_frequency = (2 * PI) / _preview_period
 
 
 func _process(_delta: float) -> void:
@@ -39,11 +34,9 @@ func _process(_delta: float) -> void:
 
 	_preview_time += _delta
 	
-	if _preview_time >= _preview_period:
-		_preview_time = 0
+	if _preview_time >= _preview_time
 	
-	var oscillation := (sin(_preview_time * _preview_frequency) + 1.0) / 2.0 * _preview_amplitude
-	preview_sprite.modulate.a = _preview_base_alpha + oscillation * (1.0 - _preview_base_alpha)
+	
 	
 func _create_temp_instance() -> void:
 	var selected_scene := placeables[_selected_placeable_idx]
@@ -51,4 +44,3 @@ func _create_temp_instance() -> void:
 	_selected_placeable = selected_scene.instantiate()	
 	var sprite: Sprite2D = _selected_placeable.get_node("Sprite2D")
 	preview_sprite.texture = sprite.texture
-
