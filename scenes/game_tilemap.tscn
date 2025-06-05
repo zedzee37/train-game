@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bp535sak7qpkc"]
 
 [ext_resource type="Script" uid="uid://cs1ttr70egjeo" path="res://scripts/game_tilemap.gd" id="1_2sy46"]
-[ext_resource type="PackedScene" uid="uid://dm5mdur8fsank" path="res://scenes/placeables/placeable_template.tscn" id="2_xtk88"]
+[ext_resource type="PackedScene" uid="uid://dvkaq3j13nyyr" path="res://scenes/placeables/track.tscn" id="3_pxisy"]
 
 [sub_resource type="TileSet" id="TileSet_2sy46"]
 tile_size = Vector2i(64, 64)
@@ -9,7 +9,7 @@ tile_size = Vector2i(64, 64)
 [node name="GameTilemap" type="TileMapLayer"]
 tile_set = SubResource("TileSet_2sy46")
 script = ExtResource("1_2sy46")
-placeables = Array[PackedScene]([ExtResource("2_xtk88")])
+placeables = Array[PackedScene]([ExtResource("3_pxisy")])
 
 [node name="PreviewSprite" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 1, 0.282353)
