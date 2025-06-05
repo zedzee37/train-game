@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dvkaq3j13nyyr"]
+
+[ext_resource type="Script" uid="uid://d0gt5mu3111wj" path="res://scripts/placeables/track.gd" id="1_tib6w"]
+
+[node name="Track" type="Node2D"]
+script = ExtResource("1_tib6w")

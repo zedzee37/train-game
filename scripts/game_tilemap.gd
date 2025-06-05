@@ -14,13 +14,16 @@ signal placed(node: Node2D)
 @export var _preview_amplitude: float = 0.17
 
 
+var instance: GameTileMap
 var _selected_placeable_idx: int = 0
 var _selected_placeable: Node2D
 var _preview_time: float = 0.0
 var _preview_frequency: float
+var _placed: Dictionary[Vector2i, Node2D] = {}
 
 
 func _ready() -> void:
+	instance = self
 	_preview_frequency = (2 * PI) / _preview_period
 
 
@@ -32,10 +35,8 @@ func _process(_delta: float) -> void:
 	if _selected_placeable == null:
 		_create_temp_instance()
 
-	if Input.is_action_just_pressed("place"):
-		_selected_placeable.global_position = to_global(aligned_pos)
-		get_parent().add_child(_selected_placeable)
-		_create_temp_instance()
+	if Input.is_action_pressed("place"):
+		place(_selected_placeable, local_to_map(mouse_pos))
 
 	_preview_time += _delta
 	
@@ -49,6 +50,31 @@ func _process(_delta: float) -> void:
 	preview_sprite.modulate.a = (
 		_preview_base_alpha + oscillation * (1.0 - _preview_base_alpha)
 	)
+
+
+func get_unaligned(pos: Vector2) -> Node2D:
+	var aligned_pos := map_to_local(local_to_map(pos))	
+	return get_placed(aligned_pos)
+
+
+func get_placed(pos: Vector2i) -> Node2D:
+	if not _placed.has(pos):
+		return null
+	return _placed[pos]
+
+
+func place(placeable: Node2D, pos: Vector2i) -> void:
+	if _placed.has(pos):
+		return
+
+	var aligned_pos := map_to_local(pos)
+	add_child(placeable)
+	placeable.global_position = aligned_pos
+	_placed[pos] = placeable
+	
+	if placeable == _selected_placeable:
+		_create_temp_instance()
+
 	
 func _create_temp_instance() -> void:
 	var selected_scene := placeables[_selected_placeable_idx]
@@ -64,5 +90,3 @@ func _create_temp_instance() -> void:
 			"\"Sprite2D\" Node not found in target placeable, scene path: "
 			+ selected_scene.resource_path + "."
 		)
-
-
